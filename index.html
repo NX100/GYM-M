@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Manager</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+        .card { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+        input, select, button { padding: 8px; margin: 5px 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .delete-btn { background-color: #ff4d4d; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>💪 Gym Membership Manager</h1>
+
+    <div class="card">
+        <h3>Search Members</h3>
+        <form method="GET" action="/">
+            <input type="text" name="search" placeholder="Search by name..." value="{{ search_query }}">
+            <button type="submit">Search</button>
+            <a href="/"><button type="button">Clear</button></a>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Add New Member</h3>
+        <form method="POST" action="/add">
+            <input type="text" name="name" placeholder="Enter Full Name" required>
+            
+            <select name="plan">
+                <option value="Basic">Basic Plan ($20/mo)</option>
+                <option value="Premium">Premium Plan ($50/mo)</option>
+                <option value="VIP">VIP Plan ($100/mo)</option>
+            </select>
+            
+            <button type="submit" style="background-color: #4CAF50; color: white; border: none;">Add Member</button>
+        </form>
+    </div>
+
+    <h3>Current Roster</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Plan</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{ member[0] }}</td> <td>{{ member[1] }}</td> <td>{{ member[2] }}</td> <td>
+                    <form method="POST" action="/delete/{{ member[0] }}" style="margin: 0;">
+                        <button type="submit" class="delete-btn">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" style="text-align: center;">No members found. Add someone above!</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
