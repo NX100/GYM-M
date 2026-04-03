@@ -1,0 +1,29 @@
+-- Create a new database
+CREATE DATABASE gym_app;
+
+-- Tell MySQL you want to work inside this specific database
+USE gym_app;
+
+-- Create a table with specific columns
+CREATE TABLE members (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- A unique ID number that counts up automatically
+    name VARCHAR(100),                 -- Text up to 100 characters
+    plan VARCHAR(50)                   -- Text up to 50 characters
+);
+
+INSERT INTO members (name, plan) 
+VALUES ('Alex Smith', 'Premium'),
+       ('Sarah Connor', 'Basic');
+
+-- The asterisk (*) means "give me all columns"
+SELECT * FROM members;
+
+-- Or, you can ask for specific columns and filter the results
+SELECT name FROM members WHERE plan = 'Premium';
+
+UPDATE members 
+SET plan = 'Premium' 
+WHERE name = 'Sarah Connor';
+
+DELETE FROM members 
+WHERE name = 'Alex Smith';
