@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Member</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 500px; margin: auto; background-color: #f4f4f9;}
+        .card { border: 1px solid #ccc; padding: 25px; border-radius: 8px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
+        label { font-weight: bold; display: block; margin-top: 15px; color: #333;}
+        input, select, button { padding: 10px; margin-top: 5px; width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;}
+        .btn-save { background-color: #4CAF50; color: white; border: none; cursor: pointer; font-weight: bold; margin-top: 20px;}
+        .btn-save:hover { background-color: #45a049; }
+        .btn-cancel { background-color: #e0e0e0; color: #333; text-align: center; display: inline-block; text-decoration: none; margin-top: 10px; font-weight: bold;}
+        .btn-cancel:hover { background-color: #ccc; }
+    </style>
+</head>
+<body>
+
+    <h2 style="color: #333;">✏️ Edit Member</h2>
+    
+    <div class="card">
+        <form method="POST">
+            <label>Full Name:</label>
+            <input type="text" name="name" value="{{ member.name }}" required>
+            
+          <label>Membership Plan:</label>
+            <select name="plan_id">
+                {% for plan in plans %}
+                    <option value="{{ plan.id }}" {% if member.plan_id == plan.id %}selected{% endif %}>
+                        {{ plan.name }} (₹{{ plan.price }} / {{ plan.duration_days }} days)
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label>Account Status:</label>
+            <select name="status">
+                <option value="Active" {% if member.status == 'Active' %}selected{% endif %}>Active</option>
+                <option value="Cancelled" {% if member.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+            </select>
+            
+            <button type="submit" class="btn-save">Save Changes</button>
+            <a href="/" class="btn-cancel">Go Back</a>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Archived Members</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 900px; margin: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .btn { padding: 8px 12px; border: none; cursor: pointer; border-radius: 3px; color: white; text-decoration: none; display: inline-block;}
+        .btn-reactivate { background-color: #4CAF50; font-weight: bold; }
+        .btn-back { background-color: #555; font-weight: bold;}
+    </style>
+</head>
+<body>
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="color: #616161;">📁 Archived Members</h2>
+        <a href="/" class="btn btn-back">⬅ Return to Dashboard</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Old Plan</th>
+                <th>Original Join Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr style="background-color: #f9f9f9; color: #777;">
+                <td>{{ member.id }}</td>
+                <td><strong>{{ member.name }}</strong></td>
+                <td>{{ member.plan_name }}</td>
+                <td>{{ member.join_date|string|truncate(11, True, '') }}</td>
+                <td>
+                    <form method="POST" action="/reactivate/{{ member.id }}" style="margin: 0;">
+                        <button type="submit" class="btn btn-reactivate">🔄 Reactivate Plan</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" style="text-align: center; padding: 30px;">No archived members found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
